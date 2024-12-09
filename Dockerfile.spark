@@ -1,0 +1,15 @@
+FROM bitnami/spark:latest
+USER root
+
+RUN apt-get update && apt-get install -y \
+    dpkg \
+    gnupg \
+    lsb-release \
+    apt-utils
+    
+# Copy the .deb file into the container
+COPY mysql-connector-j_9.1.0-1debian12_all.deb /tmp/
+
+# Install the .deb package and handle any dependencies
+RUN dpkg -i /tmp/mysql-connector-j_9.1.0-1debian12_all.deb && \
+    apt-get install -f -y

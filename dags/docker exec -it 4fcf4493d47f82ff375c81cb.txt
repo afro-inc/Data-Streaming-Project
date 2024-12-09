@@ -1,0 +1,2 @@
+docker exec -it 4fcf4493d47f82ff375c81cbe5a88d106b2b0cb0749e49748b506d53a7ad75f8 kafka-topics --create --topic new_user --bootstrap-server localhost:9092 --partitions 1 --replication-factor 3
+docker exec -it 4fcf4493d47f82ff375c81cbe5a88d106b2b0cb0749e49748b506d53a7ad75f8 kafka-topics --bootstrap-server kafka:9092 --create --topic new_user --partitions 1 --replication-factor 1
