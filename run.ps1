@@ -1,3 +1,5 @@
+docker compose up airflow-init
+
 docker compose up -d --build
 
 docker cp .\mysql-connector-j_9.1.0-1debian12_all.deb airflow-spark_master-1:/usr/share/java/ 

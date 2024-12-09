@@ -41,6 +41,14 @@ class KafkaProducer():
 
 
     def encrypt_password(self, password: str) -> str:
+        """Encrypts a password
+
+        Args:
+            password (str): the password to encrypt
+
+        Returns:
+            str: the encrypted password
+        """
         hash_object = hashlib.sha256()
         hash_object.update(password.encode())
         
@@ -48,10 +56,18 @@ class KafkaProducer():
 
 
     def transform(self, data: dict) -> dict:
+        """Make a first transformation for cleaner transfer
+
+        Args:
+            data (dict): the retrieved data
+
+        Returns:
+            dict: the transformed data, ready for streaming
+        """
         return {
             'id': data['id'],
             'uid': data['uid'],
-            'password': self.encrypt_password(data['password']),
+            'password': self.encrypt_password(data['password']), ## password encryption here
             'first_name': data['first_name'],
             'last_name': data['last_name'],
             'username': data['username'],
@@ -84,7 +100,7 @@ class KafkaProducer():
             client_id (str): the client id
 
         Returns:
-            Producer: _description_
+            Producer: The kafka producer instance
         """
         config = {'bootstrap.servers': self.bootstrap_servers,
                 'client.id': self.client_id }
@@ -115,6 +131,8 @@ class KafkaProducer():
             print(f"Message delivered to {msg.topic()} [{msg.partition()}] at offset {msg.offset()}")
 
     def init_stream(self):
+        """Initiate the streaming process
+        """
         producer = self.configure_kafka()
 
         for _ in range(self.STREAMING_DURATION // self.PAUSE_INTERVAL):
